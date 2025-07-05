@@ -1,6 +1,6 @@
 # Consistent Hashing as a Service (CHAAS)
 
-A distributed caching service that uses consistent hashing for load balancing across multiple cache nodes.
+A Distributed, highly scalable and stateless service for Consistent Hashing.
 
 ## Architecture
 
