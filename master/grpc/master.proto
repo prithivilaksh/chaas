@@ -1,0 +1,52 @@
+syntax = "proto3";
+
+package masterGrpc;
+
+option go_package = "/master/grpc";
+
+service Master {
+    rpc getCacheStream(GetCacheStreamRequest) returns (stream GetCacheStreamResponse) {}
+    rpc addNode(AddNodeRequest) returns (AddNodeResponse) {}
+    rpc removeNode(RemoveNodeRequest) returns (RemoveNodeResponse) {}
+    rpc createHashRing(CreateHashRingRequest) returns (CreateHashRingResponse) {}
+    rpc getState(GetStateRequest) returns (GetStateResponse) {}
+}
+
+message GetCacheStreamRequest {
+}
+
+message GetCacheStreamResponse {
+    string hash = 1;
+    string nodeId = 2;
+}
+
+message AddNodeRequest {
+    string hash = 1;
+}
+
+message AddNodeResponse {
+    string nodeId = 1;
+}
+
+message RemoveNodeRequest {
+    string nodeId = 1;
+}
+
+message RemoveNodeResponse {
+    bool success = 1;
+}
+
+message CreateHashRingRequest {
+    string numNodes = 1;
+}
+
+message CreateHashRingResponse {
+    bool success = 1;
+}
+
+message GetStateRequest {
+}
+
+message GetStateResponse {
+    map<string, string> hashToNodeId = 1;
+}

@@ -1,0 +1,37 @@
+version: '3.8'
+
+services:
+  master:
+    build:
+      context: .
+      dockerfile: Dockerfile.master
+    ports:
+      - "${MASTER_PORT:-50051}:${MASTER_PORT:-50051}"
+    networks:
+      - chaas-net
+    container_name: ${MASTER_CONTAINER_NAME:-master}
+    environment:
+      - MASTER_PORT=${MASTER_PORT:-50051}
+      - MASTER_HOST=${MASTER_CONTAINER_NAME:-master}
+
+  cache:
+    build:
+      context: .
+      dockerfile: Dockerfile.cache
+    ports:
+      - "${CACHE_PORT:-50052}:${CACHE_PORT:-50052}"
+    networks:
+      - chaas-net
+    container_name: ${CACHE_CONTAINER_NAME:-cache}
+    environment:
+      - MASTER_HOST=${MASTER_CONTAINER_NAME:-master}
+      - MASTER_PORT=${MASTER_PORT:-50051}
+      - CACHE_HOST=${CACHE_CONTAINER_NAME:-cache}
+      - CACHE_PORT=${CACHE_PORT:-50052}
+    depends_on:
+      - master
+
+networks:
+  chaas-net:
+    name: chaas-net
+    driver: bridge 

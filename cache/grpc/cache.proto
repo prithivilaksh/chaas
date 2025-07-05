@@ -1,0 +1,36 @@
+syntax = "proto3";
+
+package cacheGrpc;
+
+option go_package = "/cache/grpc";
+
+service Cache {
+    rpc GetNextNodeIdByKey(GetNextNodeIdByKeyRequest) returns (GetNextNodeIdByKeyResponse) {}
+    rpc UpdateCache(UpdateCacheRequest) returns (UpdateCacheResponse) {}
+    rpc GetState(GetStateRequest) returns (GetStateResponse) {}
+}
+
+
+message GetNextNodeIdByKeyRequest {
+    string key = 1;
+}
+
+message GetNextNodeIdByKeyResponse {
+    string nodeId = 1;
+}
+
+message UpdateCacheRequest {
+    string hash = 1;
+    string nodeId = 2;
+}
+
+message UpdateCacheResponse {
+    bool success = 1;
+}
+
+message GetStateRequest {
+}
+
+message GetStateResponse {
+    map<string, string> hashToNodeId = 1;
+}

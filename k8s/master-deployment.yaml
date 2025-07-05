@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: master
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: master
+  template:
+    metadata:
+      labels:
+        app: master
+    spec:
+      containers:
+      - name: master
+        image: chaas-master:latest
+        imagePullPolicy: Never
+        ports:
+        - containerPort: 50051
+        env:
+        - name: MASTER_PORT
+          value: "50051"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: master
+spec:
+  type: LoadBalancer
+  selector:
+    app: master
+  ports:
+  - port: 50051
+    targetPort: 50051 
